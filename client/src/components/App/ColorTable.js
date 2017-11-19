@@ -1,5 +1,7 @@
 import React from 'react';
 import { Table, Tbody, Thead, Tr, Th, Td } from '../Table/Table';
+import Input from '../Input/Input';
+import Button from '../Common/Button';
 
 class ColorTable extends React.Component {
     state = {
@@ -63,7 +65,10 @@ class ColorTable extends React.Component {
                 'Accept': 'application/json, text/plain, */*',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({id: id})
+            body: JSON.stringify({
+                id: id,
+                isSpecial: false
+            })
         })
             .then(res => res.json())
             .then(json => {
@@ -91,7 +96,7 @@ class ColorTable extends React.Component {
                 <Thead>
                     <Tr>
                         <Th>Name</Th>
-                        <Th>Value</Th>
+                        <Th>Hex</Th>
                         <Th />
                     </Tr>
                 </Thead>
@@ -101,14 +106,15 @@ class ColorTable extends React.Component {
                             <Td>{color.name}</Td>
                             <Td>{color.value}</Td>
                             <Td>
-                                <button type='button' onClick={() => this.activateColor(color._id)}>Activate</button>
-                                <button type='button' onClick={() => this.deleteColor(color._id)}>Delete</button>
+                                <a href='#' onClick={() => this.activateColor(color._id)}>Activate</a>
+                                &nbsp;|&nbsp;
+                                <a href='#' onClick={() => this.deleteColor(color._id)}>Delete</a>
                             </Td>
                         </Tr>
                     ))}
                     <Tr className='new'>
                         <Td>
-                            <input
+                            <Input
                                 type='text'
                                 placeholder='red'
                                 name='name'
@@ -117,7 +123,7 @@ class ColorTable extends React.Component {
                             />
                         </Td>
                         <Td>
-                            <input
+                            <Input
                                 type='text'
                                 placeholder='ff0000'
                                 name='value'
@@ -126,7 +132,7 @@ class ColorTable extends React.Component {
                             />
                         </Td>
                         <Td>
-                            <button type='button' onClick={this.addNewColor}>Add</button>
+                            <Button type='button' onClick={this.addNewColor}>Add</Button>
                         </Td>
                     </Tr>
                 </Tbody>

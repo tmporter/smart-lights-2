@@ -53,28 +53,42 @@ router.route('/colors/active')
         res.send('todo');
     })
     .put((req, res) => {
-        const id = req.body.id;
+        const isSpecial = req.body.isSpecial;
 
-        Color.findById(id, (err, color) => {
-            if (err) res.send(err);
+        if (isSpecial) {
+            const type = req.body.type;
 
-            if (color) {
+            sendCommand(`/arduino/special/${type}`);
 
-                // update color on arduino
-                sendCommand(`/arduino/hex/${color.value}`);
+            res.json({
+                success: true,
+                type: type,
+                message: ''
+            });
+        } else {
+            const id = req.body.id;
 
-                res.json({
-                    success: true,
-                    color: color,
-                    message: ''
-                });
-            } else {
-                res.json({
-                    success: false,
-                    message: 'Color not found'
-                });
-            }
-        });
+            Color.findById(id, (err, color) => {
+                if (err) res.send(err);
+
+                if (color) {
+
+                    // update color on arduino
+                    sendCommand(`/arduino/hex/${color.value}`);
+
+                    res.json({
+                        success: true,
+                        color: color,
+                        message: ''
+                    });
+                } else {
+                    res.json({
+                        success: false,
+                        message: 'Color not found'
+                    });
+                }
+            });
+        }
     });
 
 router.route('/colors/:color_id')
