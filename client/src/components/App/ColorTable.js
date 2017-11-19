@@ -105,7 +105,7 @@ class ColorTable extends React.Component {
                         <Tr>
                             <Td>{color.name}</Td>
                             <Td>{color.value}</Td>
-                            <Td>
+                            <Td style={{ textAlign: 'right' }}>
                                 <a href='#' onClick={() => this.activateColor(color._id)}>Activate</a>
                                 &nbsp;|&nbsp;
                                 <a href='#' onClick={() => this.deleteColor(color._id)}>Delete</a>
@@ -131,7 +131,7 @@ class ColorTable extends React.Component {
                                 onChange={this.handleInputChange}
                             />
                         </Td>
-                        <Td>
+                        <Td style={{ textAlign: 'right' }}>
                             <Button type='button' onClick={this.addNewColor}>Add</Button>
                         </Td>
                     </Tr>
