@@ -66,28 +66,36 @@ router.route('/colors/active')
                 message: ''
             });
         } else {
-            const id = req.body.id;
+            const hex = req.body.hex.replace('#', '');
 
-            Color.findById(id, (err, color) => {
-                if (err) res.send(err);
+            sendCommand(`/arduino/hex/${hex}`);
 
-                if (color) {
-
-                    // update color on arduino
-                    sendCommand(`/arduino/hex/${color.value}`);
-
-                    res.json({
-                        success: true,
-                        color: color,
-                        message: ''
-                    });
-                } else {
-                    res.json({
-                        success: false,
-                        message: 'Color not found'
-                    });
-                }
+            res.json({
+                success: true,
+                hex,
+                message: ''
             });
+
+            // Color.findById(id, (err, color) => {
+            //     if (err) res.send(err);
+
+            //     if (color) {
+
+            //         // update color on arduino
+            //         sendCommand(`/arduino/hex/${color.value}`);
+
+            //         res.json({
+            //             success: true,
+            //             color: color,
+            //             message: ''
+            //         });
+            //     } else {
+            //         res.json({
+            //             success: false,
+            //             message: 'Color not found'
+            //         });
+            //     }
+            // });
         }
     });
 

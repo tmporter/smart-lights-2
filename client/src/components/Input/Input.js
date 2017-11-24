@@ -9,6 +9,8 @@ const Input = styled.input`
     border: 0;
     background-color: #3a3e44;
     color: inherit;
+    box-sizing: border-box;
+    width: 100%;
 `;
 
 export default Input;

@@ -1,0 +1,8 @@
+.swatches-picker > div > div {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+.swatches-picker > div > div > div {
+    overflow-y: unset !important;
+}
