@@ -3,12 +3,14 @@ var app = express();
 var bodyParser = require('body-parser');
 var ngrok = require('ngrok');
 
+var config = require('./config');
+
 var mongoose = require('mongoose');
-var dbUri = 'mongodb://colors_user:colors_user@104.131.46.15:27017/colors?authSource=admin';
+var dbUri = config.mongo.dbUri;
 var dbOptions = {
-    useMongoClient: true,
-    user: 'colors_user',
-    pass: 'colors_user'
+   useMongoClient: true,
+   user: config.mongo.user,
+   pass: config.mongo.pass
 };
 
 var port = process.env.PORT || 8080;
@@ -19,19 +21,19 @@ var lightsRouter = require('./routes/lightsRoutes');
 
 // setup mongoose connection
 mongoose.connect(dbUri, dbOptions).then(
-    () => { },
-    err => console.error(err)
+   () => { },
+   err => console.error(err)
 );
 
 // setup ngrok connection
 ngrok.connect({
-    proto: 'http',
-    addr: 3000,
-    subdomain: 'smartlights',
-    authtoken: 'nXVDHu7QFBRy2mW6LoXz_2wDUU1vEbjdfR7ujDUeCg',
-    host_header: 'localhost:3000'
+   proto: config.ngrok.proto,
+   addr: config.ngrok.addr,
+   subdomain: config.ngrok.subdomain,
+   authtoken: config.ngrok.authtoken,
+   host_header: config.ngrok.host_header
 }, (err, url) => {
-    if (err) console.error(err);
+   if (err) console.error(err);
 });
 
 // setup middleware
